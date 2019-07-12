@@ -1,1 +1,1 @@
-web:gunicorn yohanes_dashboard.wsgi
+web: gunicorn yohanes_dashboard.wsgi
