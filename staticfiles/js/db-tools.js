@@ -1,3 +1,5 @@
+var db_tools = function (opts) {
+
 var $bal      = $("#balance"),
     $baBal    = $("#bonus_account_balance");
 
@@ -8,7 +10,7 @@ function getBalance() {
   return mainBal + baBal;
 }
 
-var dashboard_uri = debug ? 'http://localhost:8000/api/' : 'http://home.yohanesyuen.com/api/';
+var dashboard_uri = opts.debug ? 'http://localhost:8000/api/' : 'http://home.yohanesyuen.com/api/';
 
 var makeContext,
     fetchStates, updateStates,
@@ -138,3 +140,4 @@ registerWithDashboard = function(ctx) {
     }
   });
 }
+};
