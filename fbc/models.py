@@ -8,7 +8,14 @@ class Account(models.Model):
     def __str__(self):
         return '{} - {}'.format(self.account_id, self.name)
 
+
 class State(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     name = models.CharField(max_length=32)
     value = models.CharField(max_length=256)
+
+
+class Config(models.Model):
+    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    name = models.CharField(max_length=32)
+    value = models.TextField()

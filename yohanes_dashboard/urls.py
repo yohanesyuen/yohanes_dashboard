@@ -21,6 +21,7 @@ from fbc import views
 router = routers.DefaultRouter()
 router.register(r'accounts', views.AccountView, 'account')
 router.register(r'states', views.StateView, 'state')
+router.register(r'configs', views.ConfigView, 'config')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

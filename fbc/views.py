@@ -3,9 +3,11 @@ from rest_framework import viewsets
 
 from .serializers import AccountSerializer
 from .serializers import StateSerializer
+from .serializers import ConfigSerializer
 
 from .models import Account
 from .models import State
+from .models import Config
 
 
 class AccountView(viewsets.ModelViewSet):
@@ -30,3 +32,18 @@ class StateView(viewsets.ModelViewSet):
         if account is not None:
             queryset = queryset.filter(account__account_id=account)
         return queryset
+
+
+
+class ConfigView(viewsets.ModelViewSet):
+    serializer_class = ConfigSerializer
+
+
+    def get_queryset(self):
+        queryset = Config.objects.all()
+        account = self.request.query_params.get('account',None)
+        if account is not None:
+            queryset = queryset.filter(account__account_id=account)
+        return queryset
+
+
