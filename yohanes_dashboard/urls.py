@@ -19,7 +19,8 @@ from rest_framework import routers
 from fbc import views
 
 router = routers.DefaultRouter()
-router.register(r'fbc', views.AccountView, 'fbc')
+router.register(r'accounts', views.AccountView, 'account')
+router.register(r'states', views.StateView, 'state')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
