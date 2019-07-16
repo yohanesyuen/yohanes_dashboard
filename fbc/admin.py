@@ -7,7 +7,16 @@ from .models import Config
 # Register your models here.
 
 
+class StateAdminInline(admin.TabularInline):
+    model = State
+
+
+class ConfigAdminInline(admin.TabularInline):
+    model = Config
+
+
 class AccountAdmin(admin.ModelAdmin):
+    inlines = (StateAdminInline, ConfigAdminInline, )
     list_display = ('id', 'account_id', 'name')
 
 
