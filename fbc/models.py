@@ -10,7 +10,9 @@ class Account(models.Model):
 
 
 class State(models.Model):
-    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    account = models.ForeignKey(Account,
+                                related_name='states',
+                                on_delete=models.CASCADE)
     name = models.CharField(max_length=32)
     value = models.CharField(max_length=256)
 
@@ -19,7 +21,9 @@ class State(models.Model):
 
 
 class Config(models.Model):
-    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    account = models.ForeignKey(Account,
+                                related_name='configs',
+                                on_delete=models.CASCADE)
     name = models.CharField(max_length=32)
     value = models.TextField()
 

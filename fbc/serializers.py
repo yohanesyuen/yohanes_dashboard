@@ -6,9 +6,19 @@ from .models import Config
 
 
 class AccountSerializer(serializers.ModelSerializer):
+    states = serializers.HyperlinkedRelatedField(
+        many=True,
+        read_only=True,
+        view_name='state-detail'
+    )
+    configs = serializers.HyperlinkedRelatedField(
+        many=True,
+        read_only=True,
+        view_name='config-detail'
+    )
     class Meta:
         model = Account
-        fields = ('id', 'account_id', 'name')
+        fields = ('id', 'account_id', 'name', 'states', 'configs')
 
 
 class StateSerializer(serializers.ModelSerializer):
