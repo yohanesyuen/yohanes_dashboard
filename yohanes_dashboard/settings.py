@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'fbc',
+    'graphene_django',
 ]
 
 MIDDLEWARE = [
@@ -115,6 +116,12 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+# Graphene config
+
+GRAPHENE = {
+    'SCHEMA' : 'yohanes_dashboard.schema.schema',
+}
 
 
 # Static files (CSS, JavaScript, Images)

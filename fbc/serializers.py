@@ -16,6 +16,7 @@ class AccountSerializer(serializers.ModelSerializer):
         read_only=True,
         view_name='config-detail'
     )
+
     class Meta:
         model = Account
         fields = ('id', 'account_id', 'name', 'states', 'configs')
