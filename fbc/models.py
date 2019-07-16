@@ -14,8 +14,14 @@ class State(models.Model):
     name = models.CharField(max_length=32)
     value = models.CharField(max_length=256)
 
+    class Meta:
+        unique_together = ['account', 'name']
+
 
 class Config(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     name = models.CharField(max_length=32)
     value = models.TextField()
+
+    class Meta:
+        unique_together = ['account', 'name']
