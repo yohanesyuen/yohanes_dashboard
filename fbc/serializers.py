@@ -23,12 +23,14 @@ class AccountSerializer(serializers.ModelSerializer):
 
 
 class StateSerializer(serializers.ModelSerializer):
+    url = serializers.HyperlinkedIdentityField
     class Meta:
         model = State
-        fields = ('id', 'account', 'name', 'value')
+        fields = ('id', 'account', 'name', 'value', 'url')
 
 
 class ConfigSerializer(serializers.ModelSerializer):
+    url = serializers.HyperlinkedIdentityField
     class Meta:
         model = Config
-        fields = ('id', 'account', 'name', 'value')
+        fields = ('id', 'account', 'name', 'value', 'url')
