@@ -1,14 +1,32 @@
 import graphene
 
 from graphene_django.types import DjangoObjectType
+from graphene_django.rest_framework.mutation import SerializerMutation
 
 from .models import Account, State, Config
+
+from .serializers import AccountSerializer
+from .serializers import StateSerializer
+from .serializers import ConfigSerializer
 
 
 class AccountType(DjangoObjectType):
     class Meta:
         model = Account
 
+class CreateAccount(graphene.Mutation):
+    class Arguments:
+        account_id = graphene.Int()
+        name = graphene.String()
+    
+    account = graphene.Field(AccountType)
+    
+    def mutate(self, info, account_id, name):
+        account = Account()
+        account.account_id = account_id
+        account.name = name
+        account.save()
+        return CreateAccount(account=account)
 
 class StateType(DjangoObjectType):
     class Meta:
@@ -18,7 +36,6 @@ class StateType(DjangoObjectType):
 class ConfigType(DjangoObjectType):
     class Meta:
         model = Config
-
 
 class Query(object):
     account = graphene.Field(AccountType,
@@ -88,3 +105,6 @@ class Query(object):
             return Config.objects.get(value=value)
 
         return None
+
+class Mutation(graphene.ObjectType):
+    create_account = CreateAccount.Field()
