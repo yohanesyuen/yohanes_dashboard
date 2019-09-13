@@ -14,8 +14,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.conf import settings
 from django.conf.urls import url
+from django.conf.urls.static import static
 from django.urls import path, include
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import routers
 from fbc import views
 
@@ -29,5 +32,5 @@ router.register(r'configs', views.ConfigView, 'config')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
-    url(r'^graphql$', GraphQLView.as_view(graphiql=True)),
-]
+    url(r'^graphql$', csrf_exempt(GraphQLView.as_view(graphiql=True))),
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -3,6 +3,8 @@ import graphene
 from graphene_django.types import DjangoObjectType
 from graphene_django.rest_framework.mutation import SerializerMutation
 
+from django.db import DatabaseError, transaction
+
 from .models import Account, State, Config
 
 from .serializers import AccountSerializer
@@ -31,6 +33,28 @@ class CreateAccount(graphene.Mutation):
 class StateType(DjangoObjectType):
     class Meta:
         model = State
+
+class StateInputType(graphene.InputObjectType):
+    name = graphene.String()
+    value = graphene.String()
+
+class UpdateStates(graphene.Mutation):
+    class Arguments:
+        account_id = graphene.Int()
+        states = graphene.List(StateInputType)
+    
+    account = graphene.Field(AccountType)
+
+    def mutate(self, info, account_id, states):
+        account = Account.objects.get(account_id=account_id)
+        print('Updating {}'.format(states))
+        with transaction.atomic():
+            for state in states:
+                updated_state = State.objects.filter(account=account, name=state.name).update(value=state.value)
+                if not updated_state:
+                    State.objects.create(account=account, name=state.name, value=state.value)
+        print(self)
+        return UpdateStates(account=account)
 
 
 class ConfigType(DjangoObjectType):
@@ -108,3 +132,4 @@ class Query(object):
 
 class Mutation(graphene.ObjectType):
     create_account = CreateAccount.Field()
+    update_states = UpdateStates.Field()
